@@ -1,0 +1,1 @@
+..\..\bin\train_net.exe rapid_solverAuto.prototxt

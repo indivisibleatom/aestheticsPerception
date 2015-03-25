@@ -1,0 +1,1 @@
+..\..\bin\test_net.exe rapid_test.prototxt rapidnet_iter_50 10

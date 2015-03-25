@@ -1,0 +1,1 @@
+..\..\bin\test_net.exe rapid_testComposition.prototxt rapidnet_iter_100 4

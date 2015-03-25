@@ -1,0 +1,314 @@
+name: "RapidNetTrainDCSCNN"
+layers {
+  name: "data"
+  type: DATA_DOUBLE
+  top: "dataGlobal"
+  top: "dataLocal"
+  top: "label"
+  data_param {
+    source: "imagesDB"
+    batch_size: 40
+    scale: 0.00390625
+    crop_size: 224
+  }
+}
+
+#Global Layers
+layers {
+  name: "conv1Global"
+  type: CONVOLUTION
+  bottom: "dataGlobal"
+  top: "conv1Global"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 64
+    kernel_size: 11
+    stride: 2
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "pool1Global"
+  type: POOLING
+  bottom: "conv1Global"
+  top: "pool1Global"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+layers {
+  name: "conv2Global"
+  type: CONVOLUTION
+  bottom: "pool1Global"
+  top: "conv2Global"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 64
+    kernel_size: 5
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "pool2Global"
+  type: POOLING
+  bottom: "conv2Global"
+  top: "pool2Global"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+layers {
+  name: "conv3Global"
+  type: CONVOLUTION
+  bottom: "pool2Global"
+  top: "conv3Global"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 64
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "conv4Global"
+  type: CONVOLUTION
+  bottom: "conv3Global"
+  top: "conv4Global"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 64
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "fc1000Global"
+  type: INNER_PRODUCT
+  bottom: "conv4Global"
+  top: "fc1000Global"
+  blobs_lr: 1
+  blobs_lr: 2
+  inner_product_param {
+    num_output : 1000
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "fc256Global"
+  type: INNER_PRODUCT
+  bottom: "fc1000Global"
+  top: "fc256Global"
+  blobs_lr: 1
+  blobs_lr: 2
+  inner_product_param {
+    num_output : 256
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+
+#Local Layers
+layers {
+  name: "conv1Local"
+  type: CONVOLUTION
+  bottom: "dataLocal"
+  top: "conv1Local"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 64
+    kernel_size: 11
+    stride: 2
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "pool1Local"
+  type: POOLING
+  bottom: "conv1Local"
+  top: "pool1Local"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+layers {
+  name: "conv2Local"
+  type: CONVOLUTION
+  bottom: "pool1Local"
+  top: "conv2Local"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 64
+    kernel_size: 5
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "pool2Local"
+  type: POOLING
+  bottom: "conv2Local"
+  top: "pool2Local"
+  pooling_param {
+    pool: MAX
+    kernel_size: 3
+    stride: 2
+  }
+}
+layers {
+  name: "conv3Local"
+  type: CONVOLUTION
+  bottom: "pool2Local"
+  top: "conv3Local"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 64
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "conv4Local"
+  type: CONVOLUTION
+  bottom: "conv3Local"
+  top: "conv4Local"
+  blobs_lr: 1
+  blobs_lr: 2
+  convolution_param {
+    num_output: 64
+    kernel_size: 3
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "fc1000Local"
+  type: INNER_PRODUCT
+  bottom: "conv4Local"
+  top: "fc1000Local"
+  blobs_lr: 1
+  blobs_lr: 2
+  inner_product_param {
+    num_output : 1000
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "fc256Local"
+  type: INNER_PRODUCT
+  bottom: "fc1000Local"
+  top: "fc256Local"
+  blobs_lr: 1
+  blobs_lr: 2
+  inner_product_param {
+    num_output : 256
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+
+#Merging layers
+layers {
+  name: "concat"
+  bottom: "fc256Global"
+  bottom: "fc256Local"
+  top: "concat"
+  type: CONCAT
+  concat_param {
+    concat_dim: 1
+  }
+}
+layers {
+  name: "fc2"
+  type: INNER_PRODUCT
+  bottom: "concat"
+  top: "fc2"
+  blobs_lr: 1
+  blobs_lr: 2
+  inner_product_param {
+    num_output : 2
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+layers {
+  name: "loss"
+  type: SOFTMAX_LOSS
+  bottom: "fc2"
+  bottom: "label"
+}

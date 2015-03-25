@@ -1,0 +1,11 @@
+composition/*
+mukulSubset/*
+dataFetchers/*
+dataset/*
+imagesDB/*
+imagesDBComposition/*
+imagesDBTest/*
+old/*
+oldTrained/*
+*.solverstate
+*iter*
