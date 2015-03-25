@@ -10,8 +10,8 @@ if "%~1" == "resize" mogrify -resize 256x256! dataset\*.jpg
 
 @echo Finished parsing commandline
 :endParse
-..\..\bin\create_db.exe dataset\ dataset\listfilesDelta.txt dataset\imagesDB
-..\..\bin\create_db.exe dataset\ dataset\listfilesTest.txt dataset\imagesDBTest
+..\..\bin\create_db.exe dataset\ dataset\listfilesDelta.txt dataset\imagesDB 1
+..\..\bin\create_db.exe dataset\ dataset\listfilesTest.txt dataset\imagesDBTest 1
 md imagesDB
 md imagesDBTest
 xcopy /S dataset\imagesDB imagesDB

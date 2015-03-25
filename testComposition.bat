@@ -1,1 +1,1 @@
-..\..\bin\test_net.exe rapid_testComposition.prototxt rapidnet_iter_100 4
+..\..\bin\test_net.exe rapid_testComposition.prototxt rapidnetSCSCNN_iter_100 4

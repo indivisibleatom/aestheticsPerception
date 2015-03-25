@@ -5,6 +5,7 @@ dataset/*
 imagesDB/*
 imagesDBComposition/*
 imagesDBTest/*
+imagesDBTestSame/*
 old/*
 oldTrained/*
 *.solverstate

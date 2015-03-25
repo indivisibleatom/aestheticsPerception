@@ -6,8 +6,9 @@ layers {
   top: "label"
   data_param {
     source: "imagesDB"
-    batch_size: 40
-    scale: 0.00390625
+    batch_size: 50
+    mean_file: "../../data/ilsvrc12/imagenet_mean.binaryproto"
+    mirror: true
     crop_size: 224
   }
 }
@@ -23,12 +24,20 @@ layers {
     kernel_size: 11
     stride: 2
     weight_filler {
-      type: "xavier"
+      type: "gaussian"
+      std: 0.01
     }
     bias_filler {
       type: "constant"
+      value: 0
     }
   }
+}
+layers {
+  name: "relu1"
+  type: RELU
+  bottom: "conv1"
+  top: "conv1"
 }
 layers {
   name: "pool1"
@@ -42,9 +51,20 @@ layers {
   }
 }
 layers {
+  name: "norm1"
+  type: LRN
+  bottom: "pool1"
+  top: "norm1"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+layers {
   name: "conv2"
   type: CONVOLUTION
-  bottom: "pool1"
+  bottom: "norm1"
   top: "conv2"
   blobs_lr: 1
   blobs_lr: 2
@@ -61,6 +81,12 @@ layers {
   }
 }
 layers {
+  name: "relu2"
+  type: RELU
+  bottom: "conv2"
+  top: "conv2"
+}
+layers {
   name: "pool2"
   type: POOLING
   bottom: "conv2"
@@ -72,9 +98,20 @@ layers {
   }
 }
 layers {
+  name: "norm2"
+  type: LRN
+  bottom: "pool2"
+  top: "norm2"
+  lrn_param {
+    local_size: 5
+    alpha: 0.0001
+    beta: 0.75
+  }
+}
+layers {
   name: "conv3"
   type: CONVOLUTION
-  bottom: "pool2"
+  bottom: "norm2"
   top: "conv3"
   blobs_lr: 1
   blobs_lr: 2
@@ -88,6 +125,12 @@ layers {
       type: "constant"
     }
   }
+}
+layers {
+  name: "relu3"
+  type: RELU
+  bottom: "conv3"
+  top: "conv3"
 }
 layers {
   name: "conv4"
@@ -108,6 +151,12 @@ layers {
   }
 }
 layers {
+  name: "relu4"
+  type: RELU
+  bottom: "conv4"
+  top: "conv4"
+}
+layers {
   name: "fc1000"
   type: INNER_PRODUCT
   bottom: "conv4"
@@ -125,6 +174,21 @@ layers {
   }
 }
 layers {
+  name: "relu5"
+  type: RELU
+  bottom: "fc1000"
+  top: "fc1000"
+}
+layers {
+  name: "drop1"
+  type: DROPOUT
+  bottom: "fc1000"
+  top: "fc1000"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layers {
   name: "fc256"
   type: INNER_PRODUCT
   bottom: "fc1000"
@@ -139,6 +203,21 @@ layers {
     bias_filler {
       type: "constant"
     }
+  }
+}
+layers {
+  name: "relu6"
+  type: RELU
+  bottom: "fc256"
+  top: "fc256"
+}
+layers {
+  name: "drop2"
+  type: DROPOUT
+  bottom: "fc256"
+  top: "fc256"
+  dropout_param {
+    dropout_ratio: 0.5
   }
 }
 layers {

@@ -1,1 +1,1 @@
-..\..\bin\test_net.exe rapid_test.prototxt rapidnet_iter_50 10
+..\..\bin\test_net.exe rapid_scscnnTest.prototxt rapidnetSCSCNN_iter_100 100
